@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -16,6 +17,21 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    // Filtering 查詢條件
+    // sorting 排序
+    // Pagination 分頁
+    // Restful Products 一定要是複數
+    // step 1. 回傳所有內容
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProducts() {
+
+        List<Product> productList = productService.getProducts();
+
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
+
+    }
+
+    // 4-11 階層概念
     // {id} 要對應到 PathVariable 的 id
     @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {
@@ -28,8 +44,8 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-
     }
+
     // 4-13 驗證請求參數
     // PostMapping -> RequestBody
     // Validated -> 有用NotNull
@@ -58,12 +74,17 @@ public class ProductController {
         Product upatedProduct = productService.getProductById(productId);
 
         return ResponseEntity.status(HttpStatus.OK).body(upatedProduct);
+
     }
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId) {
         productService.deleteProductById(productId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
     }
+
+
+
 
 }
