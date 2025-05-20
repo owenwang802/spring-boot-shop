@@ -15,10 +15,11 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {
+    // {id} 要對應到 PathVariable 的 id
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable Integer id) {
 
-        Product product = productService.getProductById(productId);
+        Product product = productService.getProductById(id);
         if (product != null) {
             // 4-14 常見 http status code
             return ResponseEntity.status(HttpStatus.OK).body(product);
