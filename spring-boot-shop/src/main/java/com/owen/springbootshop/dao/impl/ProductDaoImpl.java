@@ -48,6 +48,13 @@ public class ProductDaoImpl  implements ProductDao {
         // 為什麼不用判斷？ -> defaultValue的關係 一定會有值
         sql += " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
 
+        // limit offset 分頁
+        sql += " LIMIT :limit OFFSET :offset";
+
+        params.put("limit", productQueryParams.getLimit());
+        params.put("offset", productQueryParams.getOffset());
+
+
         List<Product> productList = namedParameterJdbcTemplate.query(sql, params, new ProductRowMapper());
 
         return productList;

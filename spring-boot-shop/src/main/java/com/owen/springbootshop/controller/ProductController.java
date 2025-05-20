@@ -8,11 +8,16 @@ import com.owen.springbootshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
+// 要加上去 @Max @Min 才會真的生效 4-13
+@Validated
 @RestController
 public class ProductController {
 
@@ -22,15 +27,23 @@ public class ProductController {
     // Filtering 查詢條件
     // sorting 排序
     // Pagination 分頁
-    // Restful Products 一定要是複數
+    // RestfulAPI Products 一定要是複數
     // required false 不是必要的
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(
+
+           // Filtering 查詢條件
            @RequestParam(required = false) ProductCategory category,
            @RequestParam(required = false) String search,
-           // Filtering 查詢條件 排序Sorting
+
+           // Sorting 排序
            @RequestParam(defaultValue = "created_date") String orderBy,
-           @RequestParam(defaultValue = "desc") String sort
+           @RequestParam(defaultValue = "desc") String sort,
+
+           // Pagination 分頁
+           @RequestParam (defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+           @RequestParam (defaultValue = "0") @Min(0) Integer offset
+
     ) {
 
         ProductQueryParams productQueryParams = new ProductQueryParams();
@@ -38,6 +51,8 @@ public class ProductController {
         productQueryParams.setSearch(search);
         productQueryParams.setOrderBy(orderBy);
         productQueryParams.setSort(sort);
+        productQueryParams.setLimit(limit);
+        productQueryParams.setOffset(offset);
 
         List<Product> productList = productService.getProducts(productQueryParams);
 
