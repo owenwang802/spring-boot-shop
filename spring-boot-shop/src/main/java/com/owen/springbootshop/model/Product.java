@@ -87,7 +87,7 @@ public class Product {
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
-
+    // 時間格式統一 : 不然會跟資料庫時間不一樣
     private Date createDate;
     private Date lastModifiedDate;
 }
