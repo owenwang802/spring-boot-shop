@@ -1,5 +1,6 @@
 package com.owen.springbootshop.service.impl;
 
+import com.owen.springbootshop.constant.ProductCategory;
 import com.owen.springbootshop.dao.ProductDao;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
@@ -15,11 +16,11 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory category, String search) {
 
 
 
-        return productDao.getProducts();
+        return productDao.getProducts(category, search);
     }
 
     @Override

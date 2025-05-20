@@ -1,5 +1,6 @@
 package com.owen.springbootshop.controller;
 
+import com.owen.springbootshop.constant.ProductCategory;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 import com.owen.springbootshop.service.ProductService;
@@ -22,10 +23,14 @@ public class ProductController {
     // Pagination 分頁
     // Restful Products 一定要是複數
     // step 1. 回傳所有內容
+    // required false 不是必要的
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<Product>> getProducts(
+           @RequestParam(required = false) ProductCategory category,
+           @RequestParam(required = false) String search
+    ) {
 
-        List<Product> productList = productService.getProducts();
+        List<Product> productList = productService.getProducts(category, search);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 

@@ -1,5 +1,6 @@
 package com.owen.springbootshop.service;
 
+import com.owen.springbootshop.constant.ProductCategory;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 
     Product getProductById(Integer product_id);
 
