@@ -44,6 +44,9 @@ public class ProductDaoImpl  implements ProductDao {
             sql += " AND product_name LIKE :search";
             params.put("search", "%" + productQueryParams.getSearch() + "%");
         }
+        // 只能用字串拼接
+        // 為什麼不用判斷？ -> defaultValue的關係 一定會有值
+        sql += " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, params, new ProductRowMapper());
 

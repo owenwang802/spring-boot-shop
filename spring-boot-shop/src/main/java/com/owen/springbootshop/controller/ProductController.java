@@ -23,16 +23,21 @@ public class ProductController {
     // sorting 排序
     // Pagination 分頁
     // Restful Products 一定要是複數
-    // step 1. 回傳所有內容
     // required false 不是必要的
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(
            @RequestParam(required = false) ProductCategory category,
-           @RequestParam(required = false) String search
+           @RequestParam(required = false) String search,
+           // Filtering 查詢條件 排序Sorting
+           @RequestParam(defaultValue = "created_date") String orderBy,
+           @RequestParam(defaultValue = "desc") String sort
     ) {
+
         ProductQueryParams productQueryParams = new ProductQueryParams();
         productQueryParams.setCategory(category);
         productQueryParams.setSearch(search);
+        productQueryParams.setOrderBy(orderBy);
+        productQueryParams.setSort(sort);
 
         List<Product> productList = productService.getProducts(productQueryParams);
 
