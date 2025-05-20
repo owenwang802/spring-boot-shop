@@ -21,8 +21,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer createProduct(ProductRequest productRequest) {
 
-        Integer productId = productDao.createProduct(productRequest);
+        return  productDao.createProduct(productRequest);
+    }
 
-        return productId;
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+        productDao.updateProduct(productId, productRequest);
     }
 }
