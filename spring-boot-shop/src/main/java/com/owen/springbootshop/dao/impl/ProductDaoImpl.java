@@ -31,15 +31,7 @@ public class ProductDaoImpl  implements ProductDao {
 
         Map<String,Object> params = new HashMap<>();
 
-        if (productQueryParams.getCategory() != null) {
-            // 要預留空白鍵
-            sql += " AND category = :category";
-            params.put("category", productQueryParams.getCategory().name());
-        }
-        if (productQueryParams.getSearch() != null) {
-            sql += " AND product_name LIKE :search";
-            params.put("search", "%" + productQueryParams.getSearch() + "%");
-        }
+        sql = addFilteringSql(sql, params, productQueryParams);
 
         // 取得Count值
         Integer total = namedParameterJdbcTemplate.queryForObject(sql, params, Integer.class);
@@ -58,15 +50,8 @@ public class ProductDaoImpl  implements ProductDao {
 
         Map<String,Object> params = new HashMap<>();
 
-        if (productQueryParams.getCategory() != null) {
-            // 要預留空白鍵
-            sql += " AND category = :category";
-            params.put("category", productQueryParams.getCategory().name());
-        }
-        if (productQueryParams.getSearch() != null) {
-            sql += " AND product_name LIKE :search";
-            params.put("search", "%" + productQueryParams.getSearch() + "%");
-        }
+        sql = addFilteringSql(sql, params, productQueryParams);
+
         // 只能用字串拼接
         // 為什麼不用判斷？ -> defaultValue的關係 一定會有值
         sql += " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
@@ -164,5 +149,20 @@ public class ProductDaoImpl  implements ProductDao {
         params.put("productId", productId);
         namedParameterJdbcTemplate.update(sql, params);
 
+    }
+
+    private String addFilteringSql(String sql, Map<String, Object> params, ProductQueryParams productQueryParams) {
+
+        if (productQueryParams.getCategory() != null) {
+            // 要預留空白鍵
+            sql += " AND category = :category";
+            params.put("category", productQueryParams.getCategory().name());
+        }
+        if (productQueryParams.getSearch() != null) {
+            sql += " AND product_name LIKE :search";
+            params.put("search", "%" + productQueryParams.getSearch() + "%");
+        }
+
+        return sql;
     }
 }
