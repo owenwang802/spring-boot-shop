@@ -1,7 +1,8 @@
 package com.owen.springbootshop.service.impl;
 
-import com.owen.springbootshop.constant.ProductCategory;
+
 import com.owen.springbootshop.dao.ProductDao;
+import com.owen.springbootshop.dto.ProductQueryParams;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 import com.owen.springbootshop.service.ProductService;
@@ -16,11 +17,11 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
 
 
 
-        return productDao.getProducts(category, search);
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override

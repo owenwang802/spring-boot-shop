@@ -1,6 +1,7 @@
 package com.owen.springbootshop.controller;
 
 import com.owen.springbootshop.constant.ProductCategory;
+import com.owen.springbootshop.dto.ProductQueryParams;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 import com.owen.springbootshop.service.ProductService;
@@ -29,8 +30,11 @@ public class ProductController {
            @RequestParam(required = false) ProductCategory category,
            @RequestParam(required = false) String search
     ) {
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
 
-        List<Product> productList = productService.getProducts(category, search);
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 

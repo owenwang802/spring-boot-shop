@@ -1,6 +1,7 @@
 package com.owen.springbootshop.dao;
 
 import com.owen.springbootshop.constant.ProductCategory;
+import com.owen.springbootshop.dto.ProductQueryParams;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> getProducts(ProductCategory category, String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer id);
 
@@ -17,4 +18,8 @@ public interface ProductDao {
     void updateProduct(Integer productId, ProductRequest productRequest);
 
     void deleteProductById(Integer productId);
+
+
+
+
 }

@@ -2,6 +2,7 @@ package com.owen.springbootshop.dao.impl;
 
 import com.owen.springbootshop.constant.ProductCategory;
 import com.owen.springbootshop.dao.ProductDao;
+import com.owen.springbootshop.dto.ProductQueryParams;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 import com.owen.springbootshop.rowmapper.ProductRowMapper;
@@ -24,7 +25,7 @@ public class ProductDaoImpl  implements ProductDao {
 
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
 
         // where 1=1 -> 方便串接
         // Spring data JPA 不會有這個問題
@@ -34,14 +35,14 @@ public class ProductDaoImpl  implements ProductDao {
 
         Map<String,Object> params = new HashMap<>();
 
-        if (category != null) {
+        if (productQueryParams.getCategory() != null) {
             // 要預留空白鍵
             sql += " AND category = :category";
-            params.put("category", category.name());
+            params.put("category", productQueryParams.getCategory().name());
         }
-        if (search != null) {
+        if (productQueryParams.getSearch() != null) {
             sql += " AND product_name LIKE :search";
-            params.put("search", "%" + search + "%");
+            params.put("search", "%" + productQueryParams.getSearch() + "%");
         }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, params, new ProductRowMapper());
