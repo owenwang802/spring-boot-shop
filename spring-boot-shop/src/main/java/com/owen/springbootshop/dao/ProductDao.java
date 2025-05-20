@@ -1,11 +1,13 @@
 package com.owen.springbootshop.dao;
 
+import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 
 public interface ProductDao {
 
     Product getProductById(Integer id);
 
+    Integer createProduct(ProductRequest productRequest);
 
 
 }

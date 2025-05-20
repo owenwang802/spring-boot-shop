@@ -1,34 +1,25 @@
-package com.owen.springbootshop.model;
+package com.owen.springbootshop.dto;
 
 import com.owen.springbootshop.constant.ProductCategory;
 
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 
-public class Product {
 
-    private Integer productId;
+public class ProductRequest {
+    @NotNull
     private String productName;
     // Enums -> 處理固定值 -> 讓固定值由 Enum管理
+    @NotNull
     private ProductCategory category;
-
+    @NotNull
     private String imageUrl;
+    @NotNull
     private Integer price;
+    @NotNull
     private Integer stock;
+
     private String description;
 
-    // 時間格式統一 : 不然會跟資料庫時間不一樣
-    private Date createDate;
-    private Date lastModifiedDate;
-
-
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     public String getProductName() {
         return productName;
@@ -77,21 +68,4 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
 }
