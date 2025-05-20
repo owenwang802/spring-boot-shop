@@ -5,7 +5,6 @@ import com.owen.springbootshop.dto.ProductQueryParams;
 import com.owen.springbootshop.dto.ProductRequest;
 import com.owen.springbootshop.model.Product;
 import com.owen.springbootshop.service.ProductService;
-import com.owen.springbootshop.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class ProductController {
     // RestfulAPI Products 一定要是複數
     // required false 不是必要的
     @GetMapping("/products")
-    public ResponseEntity<Page<Product>> getProducts(
+    public ResponseEntity<List<Product>> getProducts(
 
            // Filtering 查詢條件
            @RequestParam(required = false) ProductCategory category,
@@ -55,21 +54,9 @@ public class ProductController {
         productQueryParams.setLimit(limit);
         productQueryParams.setOffset(offset);
 
-        // 取得product list
         List<Product> productList = productService.getProducts(productQueryParams);
 
-        // 取得商品總筆數
-        Integer total = productService.countProduct(productQueryParams);
-
-        // 分頁
-        Page<Product> page = new Page<>();
-        page.setLimit(limit);
-        page.setOffset(offset);
-        page.setTotal(total);
-        page.setResults(productList);
-
-
-        return ResponseEntity.status(HttpStatus.OK).body(page);
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
 
     }
 
