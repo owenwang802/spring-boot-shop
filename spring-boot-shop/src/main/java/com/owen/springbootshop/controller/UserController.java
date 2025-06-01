@@ -1,6 +1,7 @@
 package com.owen.springbootshop.controller;
 
 
+import com.owen.springbootshop.dto.UserLoginRequest;
 import com.owen.springbootshop.dto.UserRegisterRequest;
 import com.owen.springbootshop.model.User;
 import com.owen.springbootshop.service.UserService;
@@ -32,6 +33,19 @@ public class UserController {
         User user = userService.getUserById(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+
+    }
+
+
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+
+        User user = userService.login(userLoginRequest);
+
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 
     }
 

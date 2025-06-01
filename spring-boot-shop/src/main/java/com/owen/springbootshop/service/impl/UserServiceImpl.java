@@ -2,6 +2,7 @@ package com.owen.springbootshop.service.impl;
 
 
 import com.owen.springbootshop.dao.UserDao;
+import com.owen.springbootshop.dto.UserLoginRequest;
 import com.owen.springbootshop.dto.UserRegisterRequest;
 import com.owen.springbootshop.model.User;
 import com.owen.springbootshop.service.UserService;
@@ -41,6 +42,25 @@ public class UserServiceImpl implements UserService {
 
 
         return userDao.getUserById(id);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if (user == null) {
+            logger.warn("該email {} 沒有被註冊", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getPassword().equals(userLoginRequest.getPassword())) {
+            return user;
+        } else {
+            logger.warn("email {} 密碼不正確", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

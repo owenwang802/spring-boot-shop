@@ -12,7 +12,7 @@ public class User {
     // 物件轉換時 會忽略這個password的值
     @JsonIgnore
     private String password;
-    @JsonProperty("e_mail")
+    //@JsonProperty("e_mail")
     private String email;
     private Date createdDate;
     private Date lastModifiedDate;
