@@ -13,10 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class ProductDaoImpl  implements ProductDao {
@@ -54,7 +51,16 @@ public class ProductDaoImpl  implements ProductDao {
 
         // 只能用字串拼接
         // 為什麼不用判斷？ -> defaultValue的關係 一定會有值
-        sql += " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
+        List<String> allowedOrderBy = Arrays.asList("price", "created_date", "product_name");
+        List<String> allowedSort = Arrays.asList("ASC", "DESC");
+
+        String orderBy = allowedOrderBy.contains(productQueryParams.getOrderBy()) ?
+                productQueryParams.getOrderBy() : "created_date";
+
+        String sort = allowedSort.contains(productQueryParams.getSort().toUpperCase()) ?
+                productQueryParams.getSort().toUpperCase() : "DESC";
+
+        sql += " ORDER BY " + orderBy + " " + sort;
 
         // limit offset 分頁
         sql += " LIMIT :limit OFFSET :offset";
