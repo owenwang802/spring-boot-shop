@@ -1,6 +1,7 @@
 package com.owen.springbootshop.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 
@@ -9,6 +10,9 @@ public class Order {
     private Integer totalAmount;
     private Date createDated;
     private Date lastModifiedDated;
+
+
+    private List<OrderItem> orderItems;
 
     public Integer getOrderId() {
         return orderId;
@@ -48,5 +52,13 @@ public class Order {
 
     public void setLastModifiedDated(Date lastModifiedDated) {
         this.lastModifiedDated = lastModifiedDated;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

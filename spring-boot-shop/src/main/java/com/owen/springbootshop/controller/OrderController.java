@@ -1,6 +1,7 @@
 package com.owen.springbootshop.controller;
 
 import com.owen.springbootshop.dto.CreateOrderRequest;
+import com.owen.springbootshop.model.Order;
 import com.owen.springbootshop.model.User;
 import com.owen.springbootshop.service.OrderService;
 import com.owen.springbootshop.service.UserService;
@@ -26,9 +27,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private UserService userService;
-
     // /users/{userId}/orders 使用者一定要先有帳號，才能去創建訂單
     // 所以要先驗證帳號
     @PostMapping("/users/{userId}/orders")
@@ -39,7 +37,9 @@ public class OrderController {
         Integer orderId = orderService.createOrder(userId, createOrderRequest);
         logger.info("orderId: {}", orderId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+        Order order = orderService.getOrderById(orderId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
 

@@ -2,9 +2,9 @@ package com.owen.springbootshop.service.impl;
 
 import com.owen.springbootshop.dao.OrderDao;
 import com.owen.springbootshop.dao.ProductDao;
-import com.owen.springbootshop.dao.impl.OrderDaoImpl;
 import com.owen.springbootshop.dto.BuyItem;
 import com.owen.springbootshop.dto.CreateOrderRequest;
+import com.owen.springbootshop.model.Order;
 import com.owen.springbootshop.model.OrderItem;
 import com.owen.springbootshop.model.Product;
 import com.owen.springbootshop.service.OrderService;
@@ -20,7 +20,8 @@ import java.util.List;
 @Component
 public class OrderServiceImpl implements OrderService {
 
-   private static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+
+    private static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -55,5 +56,18 @@ public class OrderServiceImpl implements OrderService {
         orderDao.createOrderItems(orderId, orderItemList);
 
         return orderId;
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        order.setOrderItems(orderItemList);
+
+
+        return order;
     }
 }
