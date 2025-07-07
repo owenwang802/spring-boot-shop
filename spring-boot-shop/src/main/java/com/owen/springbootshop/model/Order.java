@@ -11,6 +11,17 @@ public class Order {
     private Date createDated;
     private Date lastModifiedDated;
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", userId=" + userId +
+                ", totalAmount=" + totalAmount +
+                ", createDated=" + createDated +
+                ", lastModifiedDated=" + lastModifiedDated +
+                ", orderItems=" + orderItems +
+                '}';
+    }
 
     private List<OrderItem> orderItems;
 

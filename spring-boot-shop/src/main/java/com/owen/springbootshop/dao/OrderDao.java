@@ -1,5 +1,7 @@
 package com.owen.springbootshop.dao;
 
+import com.owen.springbootshop.dto.OrderQueryParams;
+import com.owen.springbootshop.dto.ProductQueryParams;
 import com.owen.springbootshop.model.Order;
 import com.owen.springbootshop.model.OrderItem;
 
@@ -15,5 +17,9 @@ public interface OrderDao {
     Order getOrderById(Integer orderId);
 
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
+
+    Integer countOrder(OrderQueryParams orderQueryParams);
 
 }
